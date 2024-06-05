@@ -8,7 +8,7 @@ env:
 jobs:
   build-push-update:
     name: Build image
-    runs-on: [self-hosted, homelab]
+    runs-on: [self-hosted, Linux]
     outputs:
         image_url: ${{ steps.push-to-icr.outputs.registry-paths }}
 
