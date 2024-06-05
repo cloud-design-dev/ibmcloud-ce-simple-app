@@ -4,9 +4,6 @@ on:
   - push
 env:
   GITHUB_SHA: ${{ github.sha }}
-  REGISTRY_URL: us.icr.io
-  IMAGE_NAME: dts-ce-py-app
-  REGISTRY_NAMESPACE: rtiffany
 
 jobs:
   build-push-update:
@@ -26,7 +23,7 @@ jobs:
       id: build-image
       uses: redhat-actions/buildah-build@v2
       with:
-        image: ${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}
+        image: ${{ vars.REGISTRY_NAMESPACE }}/${{ vars.REGISTRY_IMAGE }}
         tags: latest ${{ env.SHORT_SHA }}
         containerfiles: |
           ./Dockerfile
@@ -34,7 +31,7 @@ jobs:
     - name: Log in to the IBM Cloud Container registry
       uses: redhat-actions/podman-login@v1
       with:
-        registry: ${{ env.REGISTRY_URL }}
+        registry: ${{ vars.REGISTRY_ENDPOINT }}
         username: iamapikey
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
@@ -44,7 +41,7 @@ jobs:
       with:
         image: ${{ steps.build-image.outputs.image }}
         tags: ${{ steps.build-image.outputs.tags }}
-        registry: ${{ env.REGISTRY_URL }}
+        registry: ${{ vars.REGISTRY_ENDPOINT }}
       
     - name: Print image url
       run: echo "Image pushed to ${{ steps.push-to-icr.outputs.registry-paths }}"
