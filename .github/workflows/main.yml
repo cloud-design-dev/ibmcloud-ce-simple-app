@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Deploy Application to Code Engine
-      uses: cloud-design-dev/ibmcloud-code-engine-github-action@v10
+      uses: cloud-design-dev/ibmcloud-code-engine-github-action@v12
       with:
         ibmcloud_api_key: ${{ secrets.IBMCLOUD_API_KEY }}
         resource_group: ${{ env.RESOURCE_GROUP }}
@@ -29,5 +29,6 @@ jobs:
         workload_type: 'app'
         workload_name: ${{ env.WORKLOAD_NAME }}
         workload_port: 8080
+        registry_endpoint: 'us.icr.io'
         registry_namespace: 'rtiffany'
-        registry_image: "${{ env.WORKLOAD_NAME }}-image"
+        registry_image: "${{ env.WORKLOAD_NAME }}-image:"
