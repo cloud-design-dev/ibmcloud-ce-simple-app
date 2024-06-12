@@ -1,7 +1,10 @@
 name: Use Podman to build and push container image to IBM Cloud Registry
 
 on:
-  - push
+  push:
+    branches:
+      - test
+
 env:
   GITHUB_SHA: ${{ github.sha }}
 
