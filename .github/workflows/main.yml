@@ -1,0 +1,35 @@
+name: Test app update
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  CODE_ENGINE_REGION: "us-south"
+  CODE_ENGINE_PROJECT: "rst-ce-dev"
+  WORKLOAD_NAME: "simpleapprst"
+  RESOURCE_GROUP: "CDE"
+
+jobs:
+
+  code-engine-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Deploy Application to Code Engine
+      uses: cloud-design-dev/ibmcloud-code-engine-github-action@v6
+      with:
+        ibmcloud_api_key: ${{ secrets.IBMCLOUD_API_KEY }}
+        resource_group: ${{ env.RESOURCE_GROUP }}
+        code_engine_region: ${{ env.CODE_ENGINE_REGION }}
+        code_engine_project: ${{ env.CODE_ENGINE_PROJECT }}
+        workload_type: 'app'
+        workload_name: ${{ env.WORKLOAD_NAME }}
+        workload_port: 8080
+        build_source: './app-code'
+        registry_namespace: 'rtiffany'
+        registry_image: "${{ WORKLOAD_NAME }}-image"
+```
