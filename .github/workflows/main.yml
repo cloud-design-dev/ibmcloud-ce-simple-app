@@ -32,4 +32,3 @@ jobs:
         build_source: './app-code'
         registry_namespace: 'rtiffany'
         registry_image: "${{ WORKLOAD_NAME }}-image"
-```
