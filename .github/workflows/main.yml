@@ -29,6 +29,5 @@ jobs:
         workload_type: 'app'
         workload_name: ${{ env.WORKLOAD_NAME }}
         workload_port: 8080
-        registry_endpoint: 'us.icr.io'
         registry_namespace: 'rtiffany'
-        registry_image: "${{ env.WORKLOAD_NAME }}-image:"
+        registry_image: "${{ env.WORKLOAD_NAME }}-image"
